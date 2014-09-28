@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="msapplication-tap-highlight" content="no">
+
+	<!-- foundation 5.4.0 -->
+	<link rel="stylesheet" href="../css/foundation.min.css">
+	<link rel="stylesheet" href="../css/normalize.css">	
+	<link rel="stylesheet" href="../plugins/responsive-nav/responsive-nav.css">
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="../plugins/responsive-nav/responsive-nav.min.js"></script>
+
+	<style type="text/css">
+		body{
+			font-family: 'Lato', sans-serif;
+		}
+		html{
+			overflow-x:hidden;
+		}
+		@font-face {
+			font-family: 'cloud9';
+			src: url('../fonts/cloud9.eot'); /* IE9 Compat Modes */
+			src: url('../fonts/cloud9.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+			url('../fonts/cloud9.woff') format('woff'), /* Modern Browsers */
+			url('../fonts/cloud9.ttf')  format('truetype'), /* Safari, Android, iOS */
+			url('../fonts/cloud9.svg#svgFontName') format('svg'); /* Legacy iOS */
+		}
+		.animated {
+			-webkit-animation-duration: 1.2s;
+			animation-duration: 1.2s;
+			-webkit-animation-fill-mode: both;
+			animation-fill-mode: both;
+		}
+
+		@-webkit-keyframes fadeInUp {
+			0% {
+				-webkit-transform: translate3d(0, 40%, 0);
+				transform: translate3d(0, 40%, 0);
+			}
+
+			100% {
+				-webkit-transform: none;
+				transform: none;
+			}
+		}
+
+		@keyframes fadeInUp {
+			0% {
+				-webkit-transform: translate3d(0, 40%, 0);
+				transform: translate3d(0, 40%, 0);
+			}
+
+			100% {
+				-webkit-transform: none;
+				transform: none;
+			}
+		}
+		@-webkit-keyframes fadeIn {
+			0% {opacity: 0;}
+			100% {opacity: 1;}
+		}
+
+		@keyframes fadeIn {
+			0% {opacity: 0;}
+			100% {opacity: 1;}
+		}
+
+		.fadeIn {
+			-webkit-animation-name: fadeIn;
+			animation-name: fadeIn;
+			-webkit-animation-delay: 0.5s; /* Chrome, Safari, Opera */
+			animation-delay: 0.5s;
+		}
+
+		.fadeInUp {
+			-webkit-animation-name: fadeInUp;
+			animation-name: fadeInUp;
+		}
+		@-webkit-keyframes fadeOut {
+			0% {opacity: 1;}
+			100% {opacity: 0;}
+		}
+
+		@keyframes fadeOut {
+			0% {opacity: 1;}
+			100% {opacity: 0;}
+		}
+
+		.fadeOut {
+			-webkit-animation-name: fadeOut;
+			animation-name: fadeOut;
+		}
+
+
+		.nav-collapse,
+		.nav-collapse ul {
+			list-style: none;
+			width: 100%;
+			display: block;
+		}
+
+		.nav-collapse li {
+			width: 100%;
+		}
+		#logo, #logo-img {
+			display: none;
+		}
+
+		@media screen and (min-width: 40em) {
+			.nav-collapse li {
+				width: 22.5%;
+				float: left;
+				*width: 21.9%; /* IE7 Hack */
+			}
+			#logo{
+				display: inline-block;
+				width: 10%;
+			}
+			#logo-img{
+				position: absolute;
+				z-index: 99;
+				display: inline-block;
+				top:0;
+				left:calc(50% - 65px) ;
+			}
+			#logo-img img{
+				height: 130px;
+				-webkit-transition: height 0.2s;
+				-o-transition: height 0.2s;
+				transition: height 0.2s;
+			}
+			#student-blocks{
+				margin-top: -45px;
+			}
+		}
+		
+		.nav-collapse{
+			background: #2e2e2e;
+		}
+		.nav-collapse a {
+			color: #fff;
+			text-decoration: none;
+			width: 100%;
+			display: inline-block;
+			padding: 1em 1em;
+			padding-top:1.7em;
+			-webkit-transition: color 0.1s, -webkit-transform 0.2s ease-out, padding 0.2s;
+			-o-transition: color 0.1s, transform 0.2s ease-out, padding 0.2s;
+			transition: color 0.1s, transform 0.2s ease-out, padding 0.2s;
+		}
+		.nav-collapse li{
+			border-bottom:1px dashed rgba(255,255,255,0.2);			
+		}
+		.nav-collapse li:last-child{
+			border-bottom:none;				
+		}
+		.nav-collapse a:hover{
+			color:#1abc9c;
+		}
+		#triangle-topleft{
+			display: none;
+		}
+
+		@media screen and (min-width: 40em) {
+
+			
+			.nav-collapse a {
+				margin: 0;
+				text-align: center;
+			}
+			#triangle-topleft {
+				width: 0;
+				height: 0;
+				border-top: 45px solid #2e2e2e;
+				-webkit-transition: border-top 0.2s;
+				-o-transition: border-top 0.2s;
+				transition: border-top 0.2s;
+				position: relative;
+				border-right: 100vw solid rgba(255, 255, 255, 0);
+				-moz-transform: scale(.9999);
+				z-index: 10;
+			}
+			.nav-collapse li{
+				border-bottom:none;			
+			}
+
+
+		}
+
+		.nav-toggle {
+			position: fixed;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			text-decoration: none;
+			text-indent: -999px;
+			position: relative;
+			width: 70px;
+			height: 55px;
+			float: right;
+			z-index: 999;
+		}
+
+		.nav-toggle:before {
+			color: rgba(255,255,255,0.6); /* Edit this to change the icon color */
+			position: absolute;
+			content: "≡";
+			text-indent: 0;
+			text-align: center;
+			line-height: 55px;
+			speak: none;
+			width: 100%;
+			top: 0;
+			left: 0;
+
+		}
+
+		.nav-toggle.active::before {
+			font-size: 24px;
+			content:"×";
+		}
+
+		#page{
+			height: 100%;
+			position: absolute;
+			left:0;
+			right:0;
+			top:0;
+			bottom:0;
+			background: #1e1e1e; /* Old browsers */
+
+		}
+
+		footer{
+			background: #1e1e1e;
+			height: 20%;
+			position: absolute;
+			bottom:0;
+			left:0;
+			right:0;
+		}
+		#footer-social{
+			height: 40%;
+			background: #171717;
+			width: 100%;
+		}
+
+		#student-blocks{
+			height: 65%;
+			display: table;
+			min-width: 100%;
+			background: #F8A24D;
+			-webkit-animation-name: myfirst;
+			-webkit-animation-duration: 10s;
+			-webkit-animation-timing-function: linear;
+			-webkit-animation-iteration-count: infinite;
+			-webkit-animation-direction: alternate;
+			-webkit-animation-play-state: running;
+			/* Standard syntax */
+			animation-name: myfirst;
+			animation-duration: 10s;
+			animation-timing-function: linear;
+			animation-iteration-count: infinite;
+			animation-direction: alternate;
+			animation-play-state: running;
+
+		}
+		#student-blocks>div{
+			width:100%;
+			padding: 5%;
+			padding-top: calc(45px + 2%);
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		#student-blocks h2{
+			font-family: 'Lato', sans-serif;
+			font-size: 5rem;
+			font-weight: 900;
+			text-transform: uppercase;
+			letter-spacing: -1px;
+
+		}
+		#student-blocks p{
+			font-weight: 300;
+			font-size: 2rem;
+		}
+		@-webkit-keyframes myfirst {
+			0%   {background: #;}
+			25%  {background: #2ecc71;}
+			50%  {background: #3498db;}
+			100% {background: #9b59b6;}
+
+		}
+
+		/* Standard syntax */
+		@keyframes myfirst {
+			0%   {background: red;}
+			25%  {background: yellow;}
+			50%  {background: blue;}
+			100% {background: green;}
+		}
+
+		#feature-block{
+			height: calc(35% - 4.25rem);
+			width: 100%;
+			display: block;
+			background: #1e1e1e;
+			max-width: 100%;
+
+		}
+
+		#feature-block .content{
+			height: 100%;
+			padding: 0;
+			-webkit-transition: color 0.3s;
+			-o-transition: color 0.3s;
+			transition: color 0.3s;
+			border-left: 1px dashed rgba(255,255,255,0.1);
+			-webkit-transition: transform 0.2s;
+			-o-transition: transform 0.2s;
+			transition: transform 0.2s;
+			-webkit-tap-highlight-color: transparent;
+		}
+
+		.icon-font{
+			font-family: 'cloud9';
+			font-size: 5rem;
+			color: rgba(255,255,255,0.4);
+			text-align: center;
+			padding: 0;
+			-webkit-transition: color 0.3s;
+			-o-transition: color 0.3s;
+			transition: color 0.3s;
+			height: 60%;
+			padding-top: 1rem;
+		}
+		.feature-name{
+			color: rgba(255,255,255,0.4);
+			font-size: 1.8rem;
+			text-align: center;
+			display: block;
+			font-weight: 300;
+			text-transform: lowercase;
+			-webkit-transition: color 0.3s, padding-top 0.2s ease-in-out;
+			-o-transition: color 0.2s, padding-top 0.2s ease-in-out;
+			transition: color 0.2s, padding-top 0.2s ease-in-out;
+			padding: 0;
+			margin-top: -1rem;
+		}
+
+
+		.content:hover .icon-font{
+			color:#1abc9c;
+
+		}
+		.content:hover .feature-name{
+			padding-top: 0.2em;
+		}
+		button{
+			border:2px solid rgba(0,0,0,0.4);
+			background: transparent;
+			-webkit-transition: background 0.1s;
+			-o-transition: background 0.1s;
+			transition: background 0.1s;
+		}
+		button:hover, button:visited{
+			background:rgba(0,0,0,0.1);
+			outline: none;
+
+		}
+		button:active{
+			outline: none;
+			background:rgba(0,0,0,0.2);
+
+		}
+		#mobile-nav{
+			position: absolute;
+			background: #1e1e1e;
+			display: block;
+			left:0;
+			right:0;
+			top:0;
+			height: 55px;
+		}
+		#mobile-nav h1{
+			color: white;
+			padding: 0;
+			margin:0;
+			font-family: 'Lato', sans-serif;
+			text-transform: uppercase;
+			font-weight: 300;
+			font-size: 1.5rem;
+			line-height: 55px;
+			padding-left: 15px;
+		}
+		#mobile-nav h1 img{
+			width: 20px;
+			height: 35px;
+			margin-right: 10px;
+		}
+		@media screen and (max-width: 1400px) {
+			
+			.nav-collapse a {
+				padding: 0.7em 0.7em;
+				padding-top:1.2em;
+			}
+			#triangle-topleft {
+				border-top: 30px solid #2e2e2e;
+			}
+			#logo-img img{
+				height: 100px;
+			}
+			#logo-img{
+				left:calc(50% - 50px);
+			}
+			#feature-block{
+				height: calc(35% - 2.75rem);
+			}
+			.feature-name{
+				font-size: 2rem;
+				margin-top: -0.9rem;
+
+			}
+			.icon-font{
+				font-size: 3.5rem;
+			}
+			#student-blocks h2{
+				font-size: 3.8rem;
+			}
+			#student-blocks p{
+				font-size: 1.2rem;
+			}
+		}
+
+		@media screen and (max-width: 40em) {
+			#student-blocks{
+				overflow: hidden;
+				
+			}
+			#student-blocks>div{
+				padding: 2% 8%;
+				border:1px solid green;
+			}
+			#feature-block{
+				height: calc(35% - 55px);
+				overflow: hidden;
+			}
+			#feature-block .content{
+				height: 33.3%;
+				border-bottom: 1px dashed rgba(255,255,255,0.1);
+				border-left: none;
+				padding-left: 5%;
+				display: table;
+
+			}
+			.icon-font{
+				font-size: 1.7rem;
+				display: table-cell;
+				padding: 0;
+				vertical-align: middle;
+				width: 15%;
+
+			}
+			.feature-name{
+				display: table-cell;
+				margin:0;
+				padding: 0;
+				vertical-align: middle;
+				text-align: left;
+				padding-left: 6%;
+				font-size: 1.5rem;
+			}
+			.feature-name:after{
+				content:"g";
+				font-family: 'cloud9';
+				vertical-align: middle;
+				padding-left: 0;
+				-webkit-transition: padding-right 0.2s;
+				-o-transition: padding-right 0.2s;
+				transition: padding-right 0.2s;
+				float:right;
+				padding-right: 5%;
+				color:#1abc9c;
+
+			}
+			.content:hover .feature-name{
+				padding-top: 0;
+			}
+			.content:hover .feature-name:after{
+				padding-right: 3%;
+			}
+			#student-blocks h2{
+				font-size: 2.2rem;
+				border:1px solid red;
+				letter-spacing: 1px;
+			}
+			#student-blocks p{
+				font-size: 1.3rem;
+			}
+			button{
+				padding: 0.5em 1em;
+			}
+
+		}
+
+	</style>
+</head>
+<body>
+	<div id="page">
+		<nav id="mobile-nav" class="show-for-small-only">
+			<h1><img src="../img/logo2.svg">Cloud 9</h1>
+		</nav>
+		<nav class="nav-collapse">
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">About</a></li>
+				<li id="logo"><a href="#">&nbsp;</a></li>
+				<li><a href="#">Projects</a></li>
+				<li><a href="#">Hi Shubham!</a></li>
+			</ul>
+		</nav>
+		<div id="logo-img"><a href="index.html"><img src="../img/logo2.svg"></a></div>
+
+		<div id="triangle-topleft" class="show-for-medium-up"></div>
+
+		<section id="student-blocks">
+			<div>
+				<h2 class="animated fadeInUp">News Item #1</h2>
+				<p class="animated fadeIn">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate corrupti veniam corporis ratione recusandae, laborum rerum temporibus. 
+				</p>
+				<button class="animated fadeIn">Take me there!</button>
+			</div>
+			<div>
+				<h2 class="animated fadeInUp">News Item #2</h2>
+				<p class="animated fadeIn">Cupiditate corrupti veniam corporis ratione recusandae, laborum rerum temporibus. </p>
+				<button class="animated fadeIn">Let's Go!</button>
+
+			</div>
+		</section>
+		<section id="feature-block" class="row">
+			<a href="#"><div class="columns small-12 medium-4 large-4 content">
+				<div class="icon-font">e</div>
+				<span class="feature-name">news</span>
+			</div></a>
+			<a href="#"><div class="columns small-12 medium-4 large-4 content">
+				<div class="icon-font">b</div>
+				<span class="feature-name">attendence</span>
+
+			</div></a>
+			<a href="#"><div class="columns small-12 medium-4 large-4 content">
+				<div class="icon-font">d</div>
+				<span class="feature-name">marks</span>
+
+			</div></a>
+
+		</section>
+	</div>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+		var navigation = responsiveNav(".nav-collapse", {
+				animate: true,                    // Boolean: Use CSS3 transitions, true or false
+				transition: 284,                  // Integer: Speed of the transition, in milliseconds
+				label: "Menu",                    // String: Label for the navigation toggle
+				insert: "after",                  // String: Insert the toggle before or after the navigation
+				customToggle: "",                 // Selector: Specify the ID of a custom toggle
+				closeOnNavClick: true,           // Boolean: Close the navigation when one of the links are clicked
+				openPos: "relative",              // String: Position of the opened nav, relative or static
+				navClass: "nav-collapse",         // String: Default CSS class. If changed, you need to edit the CSS too!
+				navActiveClass: "js-nav-active",  // String: Class that is added to <html> element when nav is active
+				jsClass: "js",                    // String: 'JS enabled' class which is added to <html> element
+				init: function(){},               // Function: Init callback
+				open: function(){},               // Function: Open callback
+				close: function(){}               // Function: Close callback
+			});
+
+$(function ()
+{
+
+	$("#student-blocks > div:gt(0)").hide();
+
+	setInterval(function ()
+	{
+		$('#student-blocks > div:first')
+		.hide()
+		.next()
+		.fadeIn()
+		.end()
+		.appendTo('#student-blocks');
+	}, 4000);
+});
+
+</script>
+<script type="text/javascript">
+	/*******************Touch Functions**************************/
+
+	function is_touch_device() {
+		return (('ontouchstart' in window)
+			|| (navigator.MaxTouchPoints > 0)
+			|| (navigator.msMaxTouchPoints > 0));
+	}
+
+</script>
+</body>
+</html>
